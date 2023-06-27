@@ -24,11 +24,12 @@ async function createAddon(zip: string, token: string) {
       },
       maxContentLength: Infinity
     });
+    core.debug(`Response: ${JSON.stringify(response.data)}`);
   } catch(err) {
-    console.error(`Error Response: ${JSON.stringify(err.response?.data)}`);
+    const response = (err as any).response ? (err as any).response.data : 'unknown'
+      console.error(`Error Response: ${JSON.stringify(response)}`);
     throw err;
   }
-  core.debug(`Response: ${JSON.stringify(response.data)}`);
 }
 
 async function updateAddon(id: string, zip: string, token: string) {
@@ -42,11 +43,12 @@ async function updateAddon(id: string, zip: string, token: string) {
       },
       maxContentLength: Infinity
     });
+    core.debug(`Response: ${JSON.stringify(response.data)}`);
   } catch(err) {
-    console.error(`Error Response: ${JSON.stringify(err.response?.data)}`);
+    const response = (err as any).response ? (err as any).response.data : 'unknown'
+      console.error(`Error Response: ${JSON.stringify(response)}`);
     throw err;
   }
-  core.debug(`Response: ${JSON.stringify(response.data)}`);
 }
 
 async function publishAddon(id: string, token: string, publishTarget: string) {
@@ -62,11 +64,12 @@ async function publishAddon(id: string, token: string, publishTarget: string) {
         }
       }
     );
+    core.debug(`Response: ${JSON.stringify(response.data)}`);
   } catch(err) {
-    console.error(`Error Response: ${JSON.stringify(err.response?.data)}`);
+    const response = (err as any).response ? (err as any).response.data : 'unknown'
+      console.error(`Error Response: ${JSON.stringify(response)}`);
     throw err;
   }
-  core.debug(`Response: ${JSON.stringify(response.data)}`);
 }
 
 async function run() {
