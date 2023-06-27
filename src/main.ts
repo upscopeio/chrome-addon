@@ -16,13 +16,18 @@ async function requestToken(id: string, secret: string, refresh: string) {
 async function createAddon(zip: string, token: string) {
   const endpoint = `https://www.googleapis.com/upload/chromewebstore/v1.1/items?uploadType=media`;
   const body = fs.readFileSync(path.resolve(zip));
-  const response = await axios.post(endpoint, body, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'x-goog-api-version': '2'
-    },
-    maxContentLength: Infinity
-  });
+  try {
+    const response = await axios.post(endpoint, body, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'x-goog-api-version': '2'
+      },
+      maxContentLength: Infinity
+    });
+  } catch(err) {
+    core.debug(`Error Response: ${JSON.stringify(err.response?.data)}`);
+    throw err;
+  }
   core.debug(`Response: ${JSON.stringify(response.data)}`);
 }
 
