@@ -25,7 +25,7 @@ async function createAddon(zip: string, token: string) {
       maxContentLength: Infinity
     });
   } catch(err) {
-    core.debug(`Error Response: ${JSON.stringify(err.response?.data)}`);
+    console.error(`Error Response: ${JSON.stringify(err.response?.data)}`);
     throw err;
   }
   core.debug(`Response: ${JSON.stringify(response.data)}`);
@@ -43,7 +43,7 @@ async function updateAddon(id: string, zip: string, token: string) {
       maxContentLength: Infinity
     });
   } catch(err) {
-    core.debug(`Error Response: ${JSON.stringify(err.response?.data)}`);
+    console.error(`Error Response: ${JSON.stringify(err.response?.data)}`);
     throw err;
   }
   core.debug(`Response: ${JSON.stringify(response.data)}`);
@@ -63,7 +63,7 @@ async function publishAddon(id: string, token: string, publishTarget: string) {
       }
     );
   } catch(err) {
-    core.debug(`Error Response: ${JSON.stringify(err.response?.data)}`);
+    console.error(`Error Response: ${JSON.stringify(err.response?.data)}`);
     throw err;
   }
   core.debug(`Response: ${JSON.stringify(response.data)}`);
