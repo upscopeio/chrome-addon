@@ -34,28 +34,38 @@ async function createAddon(zip: string, token: string) {
 async function updateAddon(id: string, zip: string, token: string) {
   const endpoint = `https://www.googleapis.com/upload/chromewebstore/v1.1/items/${id}?uploadType=media`;
   const body = fs.readFileSync(path.resolve(zip));
-  const response = await axios.put(endpoint, body, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'x-goog-api-version': '2'
-    },
-    maxContentLength: Infinity
-  });
+  try {
+    const response = await axios.put(endpoint, body, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'x-goog-api-version': '2'
+      },
+      maxContentLength: Infinity
+    });
+  } catch(err) {
+    core.debug(`Error Response: ${JSON.stringify(err.response?.data)}`);
+    throw err;
+  }
   core.debug(`Response: ${JSON.stringify(response.data)}`);
 }
 
 async function publishAddon(id: string, token: string, publishTarget: string) {
   const endpoint = `https://www.googleapis.com/chromewebstore/v1.1/items/${id}/publish`;
-  const response = await axios.post(
-    endpoint,
-    { target: publishTarget },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'x-goog-api-version': '2'
+  try {
+    const response = await axios.post(
+      endpoint,
+      { target: publishTarget },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'x-goog-api-version': '2'
+        }
       }
-    }
-  );
+    );
+  } catch(err) {
+    core.debug(`Error Response: ${JSON.stringify(err.response?.data)}`);
+    throw err;
+  }
   core.debug(`Response: ${JSON.stringify(response.data)}`);
 }
 
